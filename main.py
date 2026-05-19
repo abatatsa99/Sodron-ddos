@@ -13,11 +13,11 @@ LOGO = """
 \033[92m
 
 ███████╗   ████╗  █████████╗ █████████╗
-██╔════╝ ██╔══██╗    ██╔═══╝     ██╔═══╝ 
+██╔════╝ ██╔═══██╗    ██╔═══╝     ██╔═══╝ 
 █████╗   ██║   ██║   ██║         ██║
 ██╔══╝   ████████║   ██║         ██║
 ██║      ██╔═══██║   ██║         ██║
-╚═╝      ╚═╝    ╚═╝   ╚═╝         ╚═╝
+╚═╝      ╚═╝   ╚═╝   ╚═╝         ╚═╝
                                                      
 \033[0m
 """
@@ -53,9 +53,9 @@ async def test_url(url, proxy, concurrency=50, duration=60):
             
             # Calculate metrics
             if latencies:
-                print(f"\033[92m[+] Test completed. Requests sent: {request_count}\033[0m")
-                print(f"[+] RPS: {request_count / duration:.2f}")
-                print(f"[+] Latency (ms): P50={np.percentile(latencies, 50)*1000:.2f}, "
+                print(f"\033[92m Test completed. Requests sent: {request_count}\033[0m")
+                print(f"\033[32m RPS: {request_count / duration:.2f}")
+                print(f"\033[37m Latency (ms): P50={np.percentile(latencies, 50)*1000:.2f}, "
                       f"P95={np.percentile(latencies, 95)*1000:.2f}, "
                       f"P99={np.percentile(latencies, 99)*1000:.2f}")
             else:
