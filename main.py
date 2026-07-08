@@ -42,9 +42,9 @@ async def test_url(url, proxy, concurrency=50, duration=60):
                         latency = asyncio.get_event_loop().time() - start
                         latencies.append(latency)
                         request_count += 1
-                        print(f"\033[94m[+] Success | Status: {response.status} | Latency: {latency*1000:.2f}ms\033[0m")
+                        print(f"\033[32m[+] Success | Status: {response.status} | Latency: {latency*1000:.2f}ms")
                 except Exception as e:
-                    print(f"\033[32m[❌] Request failed:\033[31m {e}\033[0m")
+                    print(f"\033[31m[❌] Request failed:\033[31m {e}")
             
             while (datetime.now() - start_time).total_seconds() < duration:
                 tasks = [single_request() for _ in range(concurrency)]
