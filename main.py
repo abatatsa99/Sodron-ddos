@@ -30,7 +30,7 @@ async def test_url(url, proxy, concurrency=50, duration=60):
     try:
         connector = ProxyConnector.from_url(proxy)
         async with aiohttp.ClientSession(connector=connector) as session:
-            print(f"\033[94m[*] Starting stress test on {url} with proxy {proxy}\033[0m")
+            print(f"[*] Starting stress test on {url} with proxy {proxy}")
             tasks = []
             
             async def single_request():
@@ -44,7 +44,7 @@ async def test_url(url, proxy, concurrency=50, duration=60):
                         request_count += 1
                         print(f"\033[32m[+] Success | Status: {response.status} | Latency: {latency*1000:.2f}ms")
                 except Exception as e:
-                    print(f"\033[31m[❌] Request failed:\033[31m {e}")
+                    print(f"\033[33m[❌] Request failed:\033[31m {e}")
             
             while (datetime.now() - start_time).total_seconds() < duration:
                 tasks = [single_request() for _ in range(concurrency)]
@@ -53,16 +53,16 @@ async def test_url(url, proxy, concurrency=50, duration=60):
             
             # Calculate metrics
             if latencies:
-                print(f"\033[92m Test completed. Requests sent: {request_count}\033[0m")
+                print(f"\033[92m Test completed. Requests sent: {request_count}")
                 print(f"\033[32m RPS: {request_count / duration:.2f}")
                 print(f"\033[37m Latency (ms): P50={np.percentile(latencies, 50)*1000:.2f}, "
                       f"P95={np.percentile(latencies, 95)*1000:.2f}, "
                       f"P99={np.percentile(latencies, 99)*1000:.2f}")
             else:
-                print("\033[95m[!] No successful requests.\033[0m")
+                print("\033[95m[!] No successful requests.")
     
     except Exception as e:
-        print(f"\033[31m[!] Error with proxy {proxy}: {e}\033[0m")
+        print(f"\033[31m[!] Error with proxy {proxy}: {e}")
 
 async def main():
     print(LOGO)
