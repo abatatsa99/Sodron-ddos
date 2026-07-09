@@ -52,10 +52,10 @@ async def test_url(url, proxy, concurrency=50, duration=60):
                 await asyncio.sleep(0.1)  # Prevent overwhelming the server
             
             # Calculate metrics
-            if latencies:(
-                      f"\033[92m Test completed. Requests sent: {request_count}")
-                      f"\033[32m RPS: {request_count / duration:.2f}")
-                      f"\033[37m Latency (ms): P50={np.percentile(latencies, 50)*1000:.2f}, "
+            if latencies:
+                      print(f"\033[92m Test completed. Requests sent: {request_count}")
+                      print(f"\033[32m RPS: {request_count / duration:.2f}")
+                      print(f"\033[37m Latency (ms): P50={np.percentile(latencies, 50)*1000:.2f}, "
                       f"P95={np.percentile(latencies, 95)*1000:.2f}, "
                       f"P99={np.percentile(latencies, 99)*1000:.2f}")
             else:
