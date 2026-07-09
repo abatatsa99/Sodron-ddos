@@ -52,10 +52,10 @@ async def test_url(url, proxy, concurrency=50, duration=60):
                 await asyncio.sleep(0.1)  # Prevent overwhelming the server
             
             # Calculate metrics
-            if latencies:
-                print(f"\033[92m Test completed. Requests sent: {request_count}")
-                print(f"\033[32m RPS: {request_count / duration:.2f}")
-                print(f"\033[37m Latency (ms): P50={np.percentile(latencies, 50)*1000:.2f}, "
+            if latencies:(
+                      f"\033[92m Test completed. Requests sent: {request_count}")
+                      f"\033[32m RPS: {request_count / duration:.2f}")
+                      f"\033[37m Latency (ms): P50={np.percentile(latencies, 50)*1000:.2f}, "
                       f"P95={np.percentile(latencies, 95)*1000:.2f}, "
                       f"P99={np.percentile(latencies, 99)*1000:.2f}")
             else:
@@ -72,23 +72,23 @@ async def main():
         url = input("[?] Enter target URL: ").strip()
         if url.startswith(('http://', 'https://')):
             break
-        print("\033[91m[!] URL must start with http:// or https://\033[0m")
+        print("\033[91m[!] URL must start with http:// or https://")
     
     while True:
         try:
             concurrency = int(input("[?] Enter concurrency (50-1000): ").strip())
             if 50 <= concurrency <= 1000:
                 break
-            print("\033[91m[!] Concurrency must be between 50 and 1000\033[0m")
+            print("\033[91m[!] Concurrency must be between 50 and 1000")
         except ValueError:
-            print("\033[91m[!] Please enter a valid number\033[0m")
+            print("\033[91m[!] Please enter a valid number")
     
     while True:
         try:
             duration = int(input("[?] Enter duration in seconds (60-3600): ").strip())
             if 60 <= duration <= 3600:
                 break
-            print("\033[91m[!] Duration must be between 60 and 3600\033[0m")
+            print("\033[91m[!] Duration must be between 60 and 3600")
         except ValueError:
             print("\033[91m[!] Please enter a valid number\033[0m")
     
@@ -96,13 +96,14 @@ async def main():
     tor_proxy = "socks5://127.0.0.1:9150"  # Tor Browser
     # tor_proxy = "socks5://127.0.0.1:9050"  # Tor service
     
-    print(f"\033[93m[*] Using Tor proxy: {tor_proxy}\033[0m")
+    print(f"\033[93m[*] Using Tor proxy: {tor_proxy}\
+    ")
     await test_url(url, tor_proxy, concurrency, duration)
 
 if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\033[91m[!] Test stopped by user.\033[0m")
+        print("\033[91m[!] Test stopped by user.")
     except Exception as e:
-        print(f"\033[91m[!] Fatal error: {e}\033[0m")
+        print(f"\033[91m[!] Fatal error: {e}")
