@@ -94,7 +94,7 @@ async def main():
     
     # Use Tor proxy
     tor_proxy = "socks5://127.0.0.1:9150"  # Tor Browser
-    # tor_proxy = "socks5://127.0.0.1:9050"  # Tor service
+    tor_proxy = "socks5://127.0.0.1:9050"  # Tor service
     
     print(f"\033[93m[*] Using Tor proxy: {tor_proxy}\
     ")
