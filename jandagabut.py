@@ -29,7 +29,7 @@ headers = {
 url = input("033[38;5;37murl (https://sodron.com/misal):")
 threads = int(input("033[38;5;37mThreads: "))
 global choice
-choice = input('proxy: '\033[0m)
+choice = input('proxy: \033[0m')
 
 
 def downloadproxy():
