@@ -26,10 +26,10 @@ headers = {
         'User-Agent' : random.choice(users)
 }
 
-url = input("\033[38;5;57murl,dron..!!:")
-threads = int(input("\033[38;5;57mThreads: "))
+url = input("033[38;5;37murl (https://sodron.com/misal):")
+threads = int(input("033[38;5;37mThreads: "))
 global choice
-choice = input('proxy: ')
+choice = input('proxy: '\033[0m)
 
 
 def downloadproxy():
