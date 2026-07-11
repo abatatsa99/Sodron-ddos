@@ -133,12 +133,12 @@ def send():
                         s.proxies['https'] = 'https://' + ff
                 a = s.get(url, headers=headers)
                 # print(a)
-                print(f' \033[38;5;220mget...    {a}'\033[0m)
+                print(f' \033[38;5;220mget...    {a}\033[0m')
                 aa = s.post(url, headers=headers, )
                 print(aa) ## aa - output request code. If 200, the proxies are working. 400 or something - they're not working. Same with a.s
-                print(f'\033[32mpost...     {aa}'\033[0m)
+                print(f'\033[32mpost...     {aa}\033[0m')
                 requests.head(url, headers=headers)
-                print("\033[38;5;39mhead..."\033[0m)
+                print("\033[38;5;39mhead...\033[0m")
 
 if __name__ == '__main__':
         downloadproxy()
