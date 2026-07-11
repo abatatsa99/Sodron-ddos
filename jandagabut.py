@@ -18,9 +18,9 @@ print("""
 \033[37m╰─────╮ ││ │   │ ││ │   │ ││ │       │ │   │ ││ │   │ │\033[38;5;37m╰─╯│ │   ╭─╮│ │   │ ││ │ ╰─╯ │ │
 \033[37m╭─────╯ ││ ╰───╯ ││ ╰───╯ ││ │       │ ╰───╯ ││ │   │ │\033[38;5;37m   │ ╰───╯ ││ ╰───╯ ││ │     │ │
 \033[37m╰───────╯╰───────╯╰───────╯╰─╯       ╰───────╯╰─╯   ╰─╯\033[38;5;37m   ╰───────╯╰───────╯╰─╯     ╰─╯ \033[0m
-\033[37m                  KOMUNITAS  JANDA  GABUT  DAN  DUDA  SEMRAWUT
-\033[32m╭────────────────────────────────────────────────────────────────────────────────╮
-\033[32m╰────────────────────────────────────────────────────────────────────────────────╯ 
+\033[37m                      KOMUNITAS  JANDA  GABUT  DAN  DUDA  SEMRAWUT
+\033[32m╭────────────────────────────────────────────────────────────────────────────────────╮
+\033[32m╰────────────────────────────────────────────────────────────────────────────────────╯ 
 """)
 headers = {
         'User-Agent' : random.choice(users)
@@ -133,12 +133,12 @@ def send():
                         s.proxies['https'] = 'https://' + ff
                 a = s.get(url, headers=headers)
                 # print(a)
-                print(f'get...    {a}')
+                print(f' \033[38;5;220mget...    {a}'\033[0m)
                 aa = s.post(url, headers=headers, )
                 print(aa) ## aa - output request code. If 200, the proxies are working. 400 or something - they're not working. Same with a.s
-                print(f'post...     {aa}')
+                print(f'\033[32mpost...     {aa}'\033[0m)
                 requests.head(url, headers=headers)
-                print("head...")
+                print("\033[38;5;39mhead..."\033[0m)
 
 if __name__ == '__main__':
         downloadproxy()
