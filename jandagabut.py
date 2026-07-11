@@ -26,8 +26,8 @@ headers = {
         'User-Agent' : random.choice(users)
 }
 
-url = input("\033[38;5;37murl (https://sodron.com/misal):")
-threads = int(input("033[38;5;37mThreads: "))
+url = input("\033[38;5;220murl (https://sodron.com/misal):")
+threads = int(input("\033[38;5;220mThreads: "))
 global choice
 choice = input('proxy: \033[0m')
 
